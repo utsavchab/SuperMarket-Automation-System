@@ -1,0 +1,31 @@
+{
+  "name": "supermarket-management-system",
+  "version": "1.0.0",
+  "description": "Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.9",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "fa-icons": "^0.2.0",
+    "font-awesome": "^4.7.0",
+    "html5-qrcode": "^2.1.5",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^8.0.0",
+    "window": "^4.2.7"
+  }
+}
