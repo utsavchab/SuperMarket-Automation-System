@@ -15,7 +15,7 @@ const Item = require('./models/item')
 const Sales = require('./models/sales')
 const { isLoggedIn } = require('./middleware')
 
-mongoose.connect('mongodb://localhost:27017/superMarket')
+mongoose.connect('mongodb+srv://vibhanshushrm2003:IL5n5ojahgMkMt8r@cluster0.y3iw8xf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
@@ -153,6 +153,7 @@ app.get('/stat', isLoggedIn, async (req, res) => {
     ])
     const allsales = await Sales.find({})
     const allDetails = await Item.find({})
+    console.log("AAAA",allsalesforpie,"BBBB",allsales,"CCCC",allDetails);
     res.render('sales_stat', { allsales, allDetails, allsalesforpie, filter })
   } catch (err) {
     console.error(err)

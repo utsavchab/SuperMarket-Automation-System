@@ -1,9 +1,20 @@
 <% layout('layout/boiler_plate')%>
+<style>
+.well{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    padding: 20px;
+}
 
+</style>
 <br>
+<div class="well">
 <h1>Welcome to <%=currentUser.user_type%> view</h1>
 <br>
-<div class="text-center" style="align-items: center; justify-content: center; margin-left: 30%;">
+<div class="text-center" style="align-items: center; justify-content: center; margin-left: 30%;" >
     <ul class="job">
         <p>The <%=currentUser.user_type%> has access to:</p>
         <% if (currentUser.user_type == "Manager"){ %>
@@ -21,6 +32,8 @@
         <li class="job">Delete damaged items from inventory</li>
         <% } %>
     </ul>
+
+
     
     <style>
     .job{
@@ -32,4 +45,5 @@
     }
     </style>
     
+</div>
 </div>
