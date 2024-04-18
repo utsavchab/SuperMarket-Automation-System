@@ -1,5 +1,14 @@
 <% layout('layout/boiler_plate')%>
-
+<style>
+  .well{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    padding: 20px;
+}
+</style>
 <script
   type="text/javascript"
   src="https://www.gstatic.com/charts/loader.js"
@@ -94,7 +103,8 @@
         a.print();
 	}
 </script>
-
+<div class="well">
+  
 <div class="total" id="printableArea" style="margin: auto; ">
   <h1>Stat</h1>
   <div class="first" id="piechart_3d"></div>
@@ -102,7 +112,7 @@
   <p><%=filter%></p>
   <p></p>
 
-  <form action="/stat" method="POST">
+  <form action="/stat" method="POST" >
     <label for="filter">Choose options:</label>
     <select id="filter" name="filter">
       <option value="0">Total</option>
@@ -116,11 +126,16 @@
   <div class="second" id="columnchart_material"></div>
 </div>
 
+</div>
+
 <br><br>
+
 <div class="text-center">
 	<input type="button" class="btn btn-primary btn-lg" onclick="printDiv('printableArea')" value="Print" />
 </div>
+
 <br><br>
+
 
 <style>
   .first {
