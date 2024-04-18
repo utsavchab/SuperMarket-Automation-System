@@ -23,6 +23,7 @@
     "font-awesome": "^4.7.0",
     "html5-qrcode": "^2.1.5",
     "mongoose": "^8.1.2",
+    "morgan": "^1.10.0",
     "nodemon": "^3.0.3",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
