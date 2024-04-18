@@ -22,7 +22,7 @@ userRouter.post('/bill', isLoggedIn, async (req, res) => {
     res.redirect('/welcome')
   }
   var bill = req.body
-  console.log(bill)
+
   const date = new Date()
   bill.date = date
 
@@ -48,7 +48,6 @@ userRouter.post('/bill', isLoggedIn, async (req, res) => {
       date: date,
     })
     await sell.save()
-    console.log(q)
   }
 
   const new_bill = new Bill({
