@@ -1,21 +1,18 @@
-const express = require('express')
-
-const path = require('path')
-const ejsMate = require('ejs-mate')
-const session = require('express-session')
-
-const flash = require('connect-flash')
-const passport = require('passport')
-const LocalStrategy = require('passport-local')
-
-const User = require('./models/user')
-
-const authRouter = require('./routers/auth.router')
-const profileRouter = require('./routers/profile.router')
-const userRouter = require('./routers/user.router')
-const inventoryRouter = require('./routers/inventory')
-const morgan = require('morgan')
-const { sessionConfig } = require('./config')
+import express from 'express'
+import path from 'path'
+import session from 'express-session'
+import flash from 'connect-flash'
+import passport from 'passport'
+import { Strategy as LocalStrategy } from 'passport-local'
+import User from './models/user'
+import authRouter from './routers/auth.router'
+import profileRouter from './routers/profile.router'
+import userRouter from './routers/user.router'
+import inventoryRouter from './routers/inventory.router'
+import morgan from 'morgan'
+import { sessionConfig } from './config'
+// @ts-ignore
+import ejsMate from 'ejs-mate'
 
 const app = express()
 app.engine('ejs', ejsMate)
@@ -33,7 +30,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
 
-passport.serializeUser(User.serializeUser())
+passport.serializeUser((User as any).serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use((req, res, next) => {
@@ -52,4 +49,4 @@ app.use(userRouter)
 app.use(profileRouter)
 app.use(inventoryRouter)
 
-module.exports = app
+export default app
