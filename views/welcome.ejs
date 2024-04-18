@@ -1,49 +1,130 @@
 <% layout('layout/boiler_plate')%>
 <style>
-.well{
+  .well {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 20px;
-}
+  }
 
+  .head {
+    color: #68acff;
+  }
+  .job {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    row-gap: 15px;
+  }
+  .card {
+    width: 350px;
+    height: 300px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    color: #68acff;
+    font-size: 1.5rem;
+    object-fit: contain;
+    text-align: center;
+    row-gap: 10px;
+    font-weight: 500;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    max-height: 200px;
+  }
+  a {
+    text-decoration: none;
+
+    color: black;
+  }
+  .well a:hover {
+    text-decoration: none;
+
+    color: black;
+  }
+  .card:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-decoration: none;
+    color: #68acff;
+    font-size: 1.6rem;
+  }
 </style>
-<br>
+<br />
 <div class="well">
-<h1>Welcome to <%=currentUser.user_type%> view</h1>
-<br>
-<div class="text-center" style="align-items: center; justify-content: center; margin-left: 30%;" >
+  <h1 class="head">Welcome to <%=currentUser.user_type%> view</h1>
+  <br />
+  <div class="text-center">
     <ul class="job">
-        <p>The <%=currentUser.user_type%> has access to:</p>
-        <% if (currentUser.user_type == "Manager"){ %>
-        <li class="job">View the sales statistics</li>
-        <li class="job">View Inventory</li>
-        <li class="job">Change price of items</li>
-        <li class="job">Order items from supplier</li>
-        <% } %>
-        <% if (currentUser.user_type == "Clerk"){ %>
-        <li class="job">Scan and enter items from customer's cart</li>
-        <li class="job">Print bill after payment</li>
-        <% } %>
-        <% if (currentUser.user_type == "Staff"){ %>
-        <li class="job">Add items after delivery from supplier</li>
-        <li class="job">Delete damaged items from inventory</li>
-        <% } %>
+      <% if (currentUser.user_type == "Manager"){ %>
+      <a href="/inventory"
+        ><li class="card">
+          <img
+            src="https://img.freepik.com/free-vector/warehouse-staff-wearing-uniform-loading-parcel-box-checking-product-from-warehouse-delivery-logistic-storage-truck-transportation-industry-delivery-logistic-business-delivery_1150-60909.jpg?t=st=1713420134~exp=1713423734~hmac=e5edd374c3ef9df316e51a267978cdc47cc613bac2924f2baba632579657ccb6&w=2000"
+          />
+          <p>Manage Inventory</p>
+        </li></a
+      >
+      <a href="/stat"
+        ><li class="card">
+          <img
+            src="https://img.freepik.com/free-vector/business-plan-concept-illustration_114360-1487.jpg?t=st=1713420347~exp=1713423947~hmac=3d7a64dc1de3d1ad2f260714df95c334f35e96518140c38098dc94e5e0ca10e2&w=2000"
+          />
+          <p>Sales statistics</p>
+        </li></a
+      >
+
+      <% } %> <% if (currentUser.user_type == "Clerk"){ %>
+      <!-- <li class="card">Scan and enter items from customer's cart</li> -->
+      <!-- TODO: change image -->
+      <a href="/bill"
+        ><li class="card">
+          <img
+            src="https://img.freepik.com/free-vector/paying-bills-concept-illustration_114360-19357.jpg?t=st=1713422083~exp=1713425683~hmac=14ca4d137ad5ff67156ecb9d74ff965f3bfe2bbc1d65761a9fa6df1aa8b4ebd9&w=1380"
+          />
+          <p>Generate Bill</p>
+        </li></a
+      >
+      <% } %> <% if (currentUser.user_type == "Staff"){ %>
+      <a href="/inventory"
+        ><li class="card">
+          <img
+            src="https://img.freepik.com/free-vector/warehouse-staff-wearing-uniform-loading-parcel-box-checking-product-from-warehouse-delivery-logistic-storage-truck-transportation-industry-delivery-logistic-business-delivery_1150-60909.jpg?t=st=1713420134~exp=1713423734~hmac=e5edd374c3ef9df316e51a267978cdc47cc613bac2924f2baba632579657ccb6&w=2000"
+          />
+          <p>Manage Inventory</p>
+        </li></a
+      >
+      <% } %>
+      <a href="/inventory"
+        ><li class="card">
+          <img
+            src="https://img.freepik.com/free-vector/personal-site-concept-illustration_114360-3417.jpg?t=st=1713420432~exp=1713424032~hmac=8c50675c611edf2bf6d49e8b5a8d187b983ccb1f99b11da7243f390330c52b75&w=1380"
+          />
+          <p>Manage Profile</p>
+        </li></a
+      >
     </ul>
 
-
-    
     <style>
-    .job{
+      .job {
         list-style: disc;
         padding: 8px 20px;
         width: auto;
         text-align: left;
         list-style-position: inside;
-    }
+      }
     </style>
-    
-</div>
+  </div>
 </div>

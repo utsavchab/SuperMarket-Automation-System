@@ -56,7 +56,7 @@ authRouter.post(
       })
     } catch (error: any) {
       req.flash('error', error.message)
-      res.redirect('/register')
+      res.redirect('/login')
     }
   }
 )

@@ -1,47 +1,81 @@
-<nav style="width: 100%;" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">SuperMarket Automation Software </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" style="justify-content: flex-end;" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/welcome">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <% if (currentUser.user_type == "Manager"){%>
-          <li class="nav-item">
-              <a class="nav-link" href="/stat">
-                Sales Statistics
-              </a>
-          </li>
-      <% } %>
-      <% if (currentUser.user_type != "Clerk"){ %>
-          <li class="nav-item">
-              <a href="/inventory" class="nav-link">
-                  Inventory
-              </a>
-          </li>
-      <% } %>
-      <% if (currentUser.user_type == "Clerk"){ %>
-          <li class="nav-item">
-              <a href="/bill" class="nav-link">
-                  Generate Bill
-              </a>
-          </li>
-      <% } %>
-        <li class="nav-item">
-          <a class="nav-link" href="/profile">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a href="/about" class="nav-link">
-              About
-          </a>
-      </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
+<style>
+  .navbar {
+    background-color: #68acff;
+    height: 80px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+  }
+  .title {
+    color: white;
+    font-size: 1.5rem;
+    padding-left: 30px;
+  }
+  .navbar a {
+    text-decoration: none;
+    color: none;
+    transition: all 0.5s ease;
+  }
 
-         
-      </ul>
-    </div>
-  </nav>
+  .navbar a:hover {
+    transform: scale(1.1);
+    color: white;
+  }
+  .nav-link {
+    color: white !important;
+  }
+  .navbar-nav {
+    gap: 10px;
+  }
+</style>
+<nav style="width: 100%" class="navbar navbar-expand-lg">
+  <a class="navbar-brand title" href="/welcome"> ShopWithEase</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    class="collapse navbar-collapse"
+    style="justify-content: flex-end"
+    id="navbarNav"
+  >
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/welcome"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <% if (currentUser.user_type == "Manager"){%>
+      <li class="nav-item">
+        <a class="nav-link" href="/stat"> Sales Statistics </a>
+      </li>
+      <% } %> <% if (currentUser.user_type != "Clerk"){ %>
+      <li class="nav-item">
+        <a href="/inventory" class="nav-link"> Inventory </a>
+      </li>
+      <% } %> <% if (currentUser.user_type == "Clerk"){ %>
+      <li class="nav-item">
+        <a href="/bill" class="nav-link"> Generate Bill </a>
+      </li>
+      <% } %>
+      <li class="nav-item">
+        <a class="nav-link" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href="/about" class="nav-link"> About </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
