@@ -7,12 +7,48 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 20px;
+    margin: auto;
+}
+.profile-card {
+    width: 400px; /* Increased width */
+    padding: 30px; /* Increased padding */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+    background-color: #68acff; /* New background color */
 }
 
+.profile-pic {
+    width: 150px; /* Increased size of profile picture */
+    height: 150px; /* Increased size of profile picture */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.profile-name {
+    font-size: 28px; /* Increased font size */
+    margin-bottom: 10px;
+    color: #fff; /* Changed font color to white for better contrast */
+}
+
+.profile-description,
+.profile-email,
+.profile-joining-date {
+    color: #fff; /* Changed font color to white for better contrast */
+    margin-bottom: 10px;
+}
 </style>
-<div class="well">
 
+    <div class="profile-card well">
+        <!-- <img src="profile.jpg" alt="Profile Picture" class="profile-pic"> -->
+        <h2 class="profile-name"><%=currentUser.name%></h2>
+        <p class="profile-description"><%=currentUser.user_type%> at ShopWithEase Corp.</p>
+        <p class="profile-email"><%=currentUser.username%></p>
+        <p class="profile-joining-date">Joined on <%=currentUser.joining_date%></p>
+    </div>
 
+<!-- 
 <h1>Profile</h1>
 <br>
 <%=console.log(currentUser)%>
@@ -31,7 +67,7 @@
             Joining Date: <%=currentUser.joining_date%>
         </li>
     </ul>
-    
+     -->
     <style>
     .job{
         list-style: disc;
