@@ -61,6 +61,11 @@ userRouter.post('/bill', isLoggedIn, async (req: Request, res: Response) => {
       total_cost: bill.sub_total,
       date: bill.date,
     })
+    console.log(new_bill.total_cost)
+    if (new_bill.total_cost == 0) {
+      req.flash('error', 'Cart price cannot be zero')
+      return res.redirect('/bill')
+    }
     await new_bill.save()
 
     bill.id = await Bill.countDocuments()

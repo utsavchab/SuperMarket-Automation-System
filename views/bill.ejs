@@ -1,5 +1,91 @@
 <% layout('layout/boiler_plate')%>
 
+<style>
+  .table{
+    background-color: #68ACFF;
+  }
+  tr:hover{
+    background-color: #68ACFF;
+  }
+  .table td{
+    border:#177df9 solid 1px;
+
+  }
+  .table th{
+    border:#177df9 solid 1px;
+    color: white;
+  }
+
+
+
+  .dropdownitems a{
+    text-decoration: none;
+     color: white;
+  padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+   
+    background-color: #177df9;
+    border-radius: 10px;
+    width: 100%;
+    
+    
+  }
+  .dropdownitems{
+    list-style-type: none;
+    padding: 0px;
+    margin:0px;
+  }
+  .dropdownitems li{
+    
+     margin: 10px;
+     height: fit-content;
+     position: relative;
+
+     
+  
+  }
+ button {
+    border-radius: 20px;
+    border: 1px solid #68acff;
+    background-color: #68acff;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  button.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #177df9; 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px #177df9; 
+}
+
+h2{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+</style>
 
 <div style="margin: auto;">
 
@@ -7,15 +93,15 @@
   </div>
 <div id = "result"></div>
     <form autocomplete="off" action="/bill" method="POST">
-    <h2>Item Details</h2>
+    <h2>Billing</h2>
     <br>
     <div class="row clearfix">
       <div class="col-md-12">
-        <table class="table table-bordered table-hover" id="tab_logic">
+        <table   class="table table-bordered table-hover" id="tab_logic">
           <thead>
             <tr>
-              <th class="text-center"> # </th>
-              <th class="text-center" style="width: 10%;"> Code </th>
+              <th class="text-center"> Sr. No. </th>
+              <th class="text-center" style="width: 10%;"> Product Code </th>
               <th class="text-center"> Product </th>
               <th class="text-center" style="width: 20%;"> Qty </th>
               <th class="text-center"> Price </th>
@@ -26,15 +112,21 @@
             <tr id='addr0'>
               <td>1</td>
               <td><input type="text" name='code[]' placeholder='#' class="form-control id" readonly/></td>
-              <td><input type="search" name='product[]'  placeholder='Enter Product Name' class="form-control" oninput="myfunc(this)"  required/>
-                <ul class="dropdownitems" id="allItems0">
-                    <%for (var i=0;i<items.length;i++){%>
+              <td>
+                <!-- <input type="search" name='product[]'  placeholder='Enter Product Name' class="form-control" oninput="myfunc(this)"  required/> -->
+                 <select  type="search" id = "select_0" name='product[]'  placeholder='Enter Product Name' class="form-control" onchange="putitem(this,this.value)" required>
+                   <option disabled selected value> -- Select an Item -- </option>
+                  <%for (var i=0;i<items.length;i++){%>
                         <% if (items[i].quantity !== 0) { %>
-                          <li style="text-align: left;" value="<%=items[i]._id%>" id="<%=items[i]._id%>" onclick="putitem(this,<%=JSON.stringify(items[i])%>)"><a href="#"><%=items[i].item_name%>(<%=items[i].quantity%>)</a></li>
+                              <option  value="<%=items[i].item_code%>"><%=items[i].item_name%></option>            
                         <% } %>
-                        <!-- <li style="text-align: left;" value="<%=items[i]._id%>" id="<%=items[i]._id%>" onclick="putitem(this,<%=JSON.stringify(items[i])%>)"><a href="#"><%=items[i].item_name%>(<%=items[i].quantity%>)</a></li> -->
+                        
                     <%}%>
-                </ul></td>
+              </select>
+                <ul class="dropdownitems" id="allItems0">
+                    
+                </ul>
+              </td>
               <td><input type="number" name='qty[]' value="0" max="0" placeholder='Enter Qty' class="form-control qty" step="1" min="0"/></td>
               <td><input type="number" name='price[]' placeholder='Unit Price' class="form-control price" readonly/></td>
               <td><input type="number" value="0" name='total[]' placeholder='0.00' class="form-control total" readonly/></td>
@@ -47,15 +139,15 @@
     </div>
     <div class="row clearfix">
       <div class="col-md-12">
-        <button type="button" id="add_row" class="btn btn-outline-success pull-left">Add Row</button>
-        <button type="button" id='delete_row' class="pull-right btn btn-outline-danger">Delete Row</button>
+        <button type="button" id="add_row" >Add New Item</button>
+        <button type="button" id='delete_row'  style="background-color: white; color: #68acff">Delete Last Item</button>
       </div>
     </div>
 
     <br>
     
     <div class="row clearfix" style="margin-top:20px">
-      <div class="pull-right col-md-4">
+      <div class="">
         <table class="table table-bordered table-hover" id="tab_logic_total">
           <tbody>
             <tr>
@@ -63,7 +155,7 @@
               <td class="text-center"><input type="number" value="0" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" readonly/></td>
             </tr>
             <tr>
-              <th class="text-center">Tax</th>
+              <th class="text-center">GST %</th>
               <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                   <input type="number" class="form-control" id="tax" name="tax" min="0" value="0" placeholder="0">
                   <div class="input-group-addon"> %</div>
@@ -102,6 +194,7 @@
     $("#add_row").click(function(){b=i-1;
         $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
         $('#addr'+i).find('#allItems'+b).attr("id","allItems"+i);
+        $('#addr'+i).find("#allItems"+i)[0].style.display = "block"
       	$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
       	i++; 
   	});
@@ -183,10 +276,19 @@ function myfunc(y)
     }
 }
 
+var itemAdded = {
+
+}
 function putitem(y,i)
 {
-  console.log("this", y)
-    x=y.parentElement.parentElement.parentElement.id
+  itemAdded[i] = true;
+  console.log(y)
+    const data = <%- JSON.stringify(items) %>
+    i = data.filter((item) => {if(item.item_code == i){
+      return true;
+    }})[0];
+    console.log(i);
+    x=y.parentElement.parentElement.id
     console.log(x)
 
     x=x.substring(4)
@@ -195,13 +297,23 @@ function putitem(y,i)
 
     var input, filter, ul, li, a, i, txtValue;
     ul = document.getElementById("allItems"+x);
+    if(ul.style.display === "none"){
+
+    }else{
+      try{
+      const addRow = document.getElementById("add_row")
+      addRow.click();
+      }catch(err){
+        console.log(err);
+      }
+    }
     ul.style.display="none"
     input=document.getElementById("addr"+x)
     input.children[1].children[0].value=i.item_code
-    input.children[2].children[0].value=i.item_name
+    input.children[2].children[0].value=i.item_code
     input.children[3].children[0].max=i.quantity
     input.children[4].children[0].value=i.unit_price
-    console.log("item", i);
+    console.log("item", i.item_code);
 }
 
 
@@ -209,7 +321,7 @@ function putitem(y,i)
 function qrCodeStart(items){
   
 
-
+try{
 
   const scanner = new Html5QrcodeScanner("reader", {
     qrbox:{
@@ -223,16 +335,44 @@ function qrCodeStart(items){
   scanner.render(qrSuccess, qrError)
   
   function qrSuccess(result){
-    var item = items.map((item) => {if(item._id == result){return item;}});
-    var element = document.getElementById(item[0]._id);
+    try{
+      var item = items.filter((item) => {if(item._id == result){return true;}});
+      console.log(item)
+    
+    var rows = document.querySelectorAll('#tab_logic tbody tr');
+
+// Iterate over the rows in reverse order
+for (var i = rows.length - 1; i >= 0; i--) {
+    // Get the select element in the current row
+    var select = rows[i].querySelector('select');
+    // Check if a select element exists in the current row
+    if (select) {
+        // This row contains a select element, so it's the last row with a select
+        var element = rows[i];
+        // Exit the loop
+        break;
+    }
+}
+
+// Now you have the last row in the tbody that contains a select element
+element = element.querySelector('select');
+
       if(item.length == 0){
         window.alert("Product qr code not found")
       }else if(!element){
         window.alert(`${item[0].item_name} is sold out!`)
       }
 
-    putitem(element, item[0]);
-
+      
+    
+      if(itemAdded[item[0].item_code]){
+        console.log("already added")
+        return;
+      }
+      putitem(element, item[0].item_code);
+      
+    
+    
     document.getElementById("result").innerHTML = `
     <h2>Added Item: ${item[0].item_name}<h2>
     
@@ -244,6 +384,9 @@ function qrCodeStart(items){
       document.getElementById("reader").style.display = "block"
       document.getElementById("result").innerHTML = ``
     }, 2000)
+  }catch(err){
+    console.log(err)
+  }
   }
   
    
@@ -252,6 +395,9 @@ function qrCodeStart(items){
   function qrError(error){
     
   }
+}catch(err){
+  console.log(err);
+}
 }
 
   qrCodeStart(<%- JSON.stringify(items) %>);
