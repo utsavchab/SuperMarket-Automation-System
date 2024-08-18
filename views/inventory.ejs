@@ -33,7 +33,7 @@
   }
 </script>
 <style>
-.styled-table {
+  .styled-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -42,35 +42,36 @@
     overflow: hidden;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
     font-family: Arial, sans-serif;
-}
+  }
 
-.styled-table thead {
+  .styled-table thead {
     background-color: #68acff;
     color: white;
-}
+  }
 
-.styled-table th, .styled-table td {
+  .styled-table th,
+  .styled-table td {
     padding: 20px; /* More padding */
     border: none;
-}
+  }
 
-.styled-table tbody tr {
+  .styled-table tbody tr {
     transition: background-color 0.3s ease;
-}
+  }
 
-.styled-table tbody tr:hover {
+  .styled-table tbody tr:hover {
     background-color: #e0e0e0;
-}
+  }
 
-.styled-table tbody tr:nth-child(even) {
+  .styled-table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
-}
-.styled-table tbody tr:hover {
+  }
+  .styled-table tbody tr:hover {
     background-color: #e0e0e0;
     transform: scale(1.03); /* Enlarge the row */
     transition: transform 0.3s ease; /* Smooth transition */
-}
-#myInput {
+  }
+  #myInput {
     width: 30%;
     padding: 10px;
     font-size: 16px; /* Larger font size */
@@ -79,38 +80,38 @@
     background-color: #f2f2f2; /* Light grey background */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
     transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
+  }
 
-#myInput:focus {
+  #myInput:focus {
     box-shadow: 0px 0px 10px #68acff; /* Blue box shadow when focused */
     transform: scale(1.02); /* Slightly increase size when focused */
     outline: none; /* Removes the default browser outline */
-}
-.modal-content {
+  }
+  .modal-content {
     background-color: #f2f2f2; /* Light grey background */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15); /* Box shadow for a 3D effect */
     font-family: Arial, sans-serif; /* Different font */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
-}
+  }
 
-.modal-content .modal-header {
+  .modal-content .modal-header {
     border-bottom: 1px solid #ddd; /* Border at the bottom of the header */
     background-color: #68acff; /* Blue background */
     color: white; /* White text */
-}
+  }
 
-.modal-content .modal-title {
+  .modal-content .modal-title {
     font-size: 20px; /* Larger font size */
-}
+  }
 
-.modal-content .close {
+  .modal-content .close {
     color: white; /* White text */
-}
+  }
 </style>
 
 <div class="text-center" style="margin: auto">
-  <h1 style="color: #68acff;">Inventory</h1>
+  <h1 style="color: #68acff">Inventory</h1>
   <br />
 
   <input
@@ -118,10 +119,10 @@
     id="myInput"
     type="text"
     placeholder="Search.."
-    style="width: 30%;"
+    style="width: 30%"
   />
   <br /><br />
-  <table  class="styled-table">
+  <table class="styled-table">
     <thead>
       <tr>
         <th>Product Code</th>
@@ -146,9 +147,8 @@
             class="btn btn-info"
             data-toggle="modal"
             data-target="#ex1"
-            style="background-color: #68acff;"
+            style="background-color: #68acff"
             onclick="fun(<%=JSON.stringify(item)%>,<%=JSON.stringify(currentUser.user_type)%>);"
-            
           >
             Edit
           </button>
@@ -157,19 +157,19 @@
       <% }) %>
     </tbody>
   </table>
-<br>
+  <br />
   <% if (currentUser.user_type == "Manager"){ %>
-    <button
-      type="button"
-      class="btn btn-success"
-      data-toggle="modal"
-      data-target="#addItem"
-      style="background-color: #68acff; width: 100%;"
-    >
-      Add Item
-    </button>
-    <br /><br />
-    <%}%>
+  <button
+    type="button"
+    class="btn btn-success"
+    data-toggle="modal"
+    data-target="#addItem"
+    style="background-color: #68acff; width: 100%"
+  >
+    Add Item
+  </button>
+  <br /><br />
+  <%}%>
 
   <!-- Edit Modal -->
   <div
@@ -211,7 +211,7 @@
             <label id="ci55" class="col-sm-2 col-form-label" for="ai4"
               >Quantity</label
             >
-            <input type="number" id="ci5" min="0" name="i4" /><br />
+            <input type="number" id="ci5" min="0" name="i4" max="500" /><br />
           </div>
 
           <div class="modal-footer">

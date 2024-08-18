@@ -31,8 +31,13 @@ statsRouter.get('/stat', isLoggedIn, async (req: Request, res: Response) => {
     ])
     const allsales = await Sales.find({})
     const allDetails = await Item.find({})
-    const filter = 0
-    res.render('sales_stat', { allsales, allDetails, allsalesforpie, filter })
+
+    res.render('sales_stat', {
+      allsales,
+      allDetails,
+      allsalesforpie,
+      filter: 'All Products Statistics',
+    })
   } catch (error) {
     console.error(error)
     res.status(500).send('Internal Server Error')
@@ -40,12 +45,34 @@ statsRouter.get('/stat', isLoggedIn, async (req: Request, res: Response) => {
 })
 
 statsRouter.post('/stat', isLoggedIn, async (req: Request, res: Response) => {
-  const filter = req.body.filter
+  let filter = req.body.filter
+  const start = new Date(req.body.start)
+  const end = new Date(req.body.end)
+
+  if (start > end) {
+    req.flash('error', 'Start date cannot be greater than end date')
+    return res.redirect('/stat')
+  }
+
   try {
-    const allsalesforpie = await Sales.aggregate([
-      {
-        $match: {},
-      },
+    let aggregationPipeline = []
+    let matchObject = {}
+    if (filter != 0) {
+      matchObject = { item_code: filter }
+    }
+    if (start && end) {
+      aggregationPipeline.push({
+        $match: {
+          // Assuming the date field in your Sales collection is named 'date'
+          ...matchObject,
+          date: {
+            $gte: start, // Start date
+            $lte: end, // End date
+          },
+        },
+      })
+    }
+    aggregationPipeline.push(
       {
         $group: {
           _id: '$item_name',
@@ -58,11 +85,35 @@ statsRouter.post('/stat', isLoggedIn, async (req: Request, res: Response) => {
         $addFields: {
           item_name: '$_id',
         },
-      },
-    ])
+      }
+    )
+
+    const allsalesforpie = await Sales.aggregate(aggregationPipeline)
+
     const allsales = await Sales.find({})
     const allDetails = await Item.find({})
-    res.render('sales_stat', { allsales, allDetails, allsalesforpie, filter })
+    if (filter != 0) {
+      const itemData = await Item.find({ item_code: filter })
+      filter = `${itemData[0].item_name} Statistics`
+      console.log()
+      res.render('sales_stat', {
+        allsales,
+        allDetails,
+        allsalesforpie,
+        filter,
+        start,
+        end,
+      })
+    } else {
+      res.render('sales_stat', {
+        allsales,
+        allDetails,
+        allsalesforpie,
+        filter: 'All Products Statistics',
+        start,
+        end,
+      })
+    }
   } catch (error) {
     console.error(error)
     res.status(500).send('Internal Server Error')

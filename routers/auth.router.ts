@@ -14,8 +14,10 @@ authRouter.post(
   passport.authenticate('local', {
     failureFlash: true,
     failureRedirect: '/login',
+    successRedirect: '/welcome',
   }),
   async (req: Request, res: Response) => {
+    console.log(req.user)
     req.flash('success', 'Welcome back!')
     res.redirect('/welcome')
   }

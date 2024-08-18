@@ -1,0 +1,67 @@
+<% layout('layout/boiler_plate') %>
+<style>
+  .styled-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #68acff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+  }
+
+  .styled-table thead {
+    background-color: #68acff;
+    color: white;
+  }
+
+  .styled-table th,
+  .styled-table td {
+    padding: 20px; /* More padding */
+    border: none;
+  }
+
+  .styled-table tbody tr {
+    transition: background-color 0.3s ease;
+  }
+
+  .styled-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+
+  .styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  .styled-table tbody tr:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.03); /* Enlarge the row */
+    transition: transform 0.3s ease; /* Smooth transition */
+  }
+</style>
+<div class="logs">
+  <h1>Activity Logs</h1>
+  <table class="styled-table">
+    <thead>
+      <th>User Type</th>
+      <th>Name</th>
+      <th>User Name</th>
+      <th>Item Code</th>
+      <th>Item Name</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <% logsData.forEach(function(log) { %>
+      <tr>
+        <td><%= log.user_type %></td>
+        <td><%= log.name %></td>
+
+        <td><%= log.username %></td>
+        <td><%= log.item_code %></td>
+        <td><%= log.item_name %></td>
+        <td><%= log.text %></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>

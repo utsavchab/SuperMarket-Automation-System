@@ -1,4 +1,4 @@
-<% layout('layout/boiler_plate')%>
+  <% layout('layout/boiler_plate')%>
 <style>
   .well{
     background: rgba(255, 255, 255, 0.1);
@@ -8,6 +8,83 @@
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 20px;
 }
+.well .total {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  
+}
+.first{
+  margin: auto;
+  width: 75% !important;
+  
+}
+
+  .filter-form{
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+    gap: 30px;
+    
+  }
+  .form-date-div{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    column-gap: 20px;
+    
+
+    
+  }
+  .filter-form label{
+    font-size: larger;
+    color: #68acff;
+    
+    padding: 12px 15px;
+    
+
+    
+    
+  }
+  .filter-form  input,select {
+    border-radius: 20px;
+    background-color: white;
+    border: 1px #68acff solid;
+    padding: 12px 15px;
+    margin:  0;
+    min-width: 25%;
+    width: fit-content;
+  }
+    button {
+    border-radius: 20px;
+    border: 1px solid #68acff;
+    background-color: #68acff;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  button.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+  }
 </style>
 <script
   type="text/javascript"
@@ -32,7 +109,7 @@
     ]);
 
     var options = {
-      title: "My Daily Activities",
+      title: "Product wise sales",
       is3D: true,
     };
 
@@ -80,7 +157,7 @@
 
     var options = {
       chart: {
-        title: "Company Performance",
+        title: "Month on Month Sales",
         subtitle: "Sales Quantity",
       },
     };
@@ -103,25 +180,42 @@
         a.print();
 	}
 </script>
+
 <div class="well">
   
 <div class="total" id="printableArea" style="margin: auto; ">
-  <h1>Stat</h1>
-  <div class="first" id="piechart_3d"></div>
+  <h1>Sales Statistics</h1>
 
-  <p><%=filter%></p>
-  <p></p>
-
-  <form action="/stat" method="POST" >
-    <label for="filter">Choose options:</label>
+    <form action="/stat" method="POST" class="filter-form" >
+      <div>
+    <label for="filter">Product :</label>
     <select id="filter" name="filter">
-      <option value="0">Total</option>
+      <option value="0">All Products</option>
       <%for(var j=0; j<allDetails.length; j++) {%>
         <option value="<%=allDetails[j].item_code%>"><%=allDetails[j].item_name%></option>
       <%}%>
     </select>
+  </div>
+  
+  <div class="form-date-div">
+    <div>
+        <label for="start">Start Date :</label>
+<input id="startdate" type="date" name="start" max="<?php echo date('Y-m-d'); ?>" />
+</div>
+<div>
+<label for="end">End Date :</label>
+<input id="enddate" type="date" name="end" max="<?php echo date('Y-m-d'); ?>" />
+</div>
+</div>
     <button type="submit"> Submit </button>
   </form>
+  <p><%=filter%></p>
+  <div class="first" id="piechart_3d"></div>
+
+  
+  <p></p>
+
+
 
   <div class="second" id="columnchart_material"></div>
 </div>
@@ -136,7 +230,45 @@
 
 <br><br>
 
+<script>
+   $(document).ready(function () {
+    
+   var todaysDate = new Date(); // Gets today's date
+    
+    // Max date attribute is in "YYYY-MM-DD".  Need to format today's date accordingly
+    
+    var year = todaysDate.getFullYear(); 						// YYYY
+    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);	// MM
+    var day = ("0" + todaysDate.getDate()).slice(-2);			// DD
 
+   	var maxDate = (year +"-"+ month +"-"+ day); // Results in "YYYY-MM-DD" for today's date 
+    
+    // Now to set the max date value for the calendar to be today's date
+    $('#startdate').attr('max',maxDate);
+    $('#enddate').attr('max',maxDate);
+
+    $('#startdate').change(function() {
+        const endVal = $('#enddate').val();
+        if(endVal > $(this).val()){
+          return;
+        }else{
+           $('#enddate').val('');
+          }
+          $('#enddate').attr('min', $(this).val());
+    });
+
+     $('#enddate').change(function() {
+        const val = $('#startdate').val()
+        if (val && val >$(this).val() ){
+           $('#startdate').val('');
+        }
+        $('#startdate').attr('max', $(this).val());
+        
+        
+    });
+ 
+  });
+</script>
 <style>
   .first {
     width: auto;

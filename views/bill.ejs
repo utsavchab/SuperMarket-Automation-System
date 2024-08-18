@@ -1,6 +1,8 @@
 <% layout('layout/boiler_plate')%>
 
 <style>
+
+
   .table{
     background-color: #68ACFF;
   }
@@ -311,6 +313,8 @@ function putitem(y,i)
     input=document.getElementById("addr"+x)
     input.children[1].children[0].value=i.item_code
     input.children[2].children[0].value=i.item_code
+    input.children[3].children[0].value = 1
+    input.children[3].children[0].min = 1;
     input.children[3].children[0].max=i.quantity
     input.children[4].children[0].value=i.unit_price
     console.log("item", i.item_code);

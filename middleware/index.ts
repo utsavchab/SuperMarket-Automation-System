@@ -5,5 +5,6 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     req.flash('error', 'You must be logged in')
     return res.redirect('/login')
   }
+
   next()
 }

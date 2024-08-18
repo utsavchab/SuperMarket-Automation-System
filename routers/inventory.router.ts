@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { isLoggedIn } from '../middleware'
 import Item, { ItemDocument } from '../models/item'
+import Log from '../models/logs'
 
 const inventoryRouter = express.Router()
 
@@ -51,9 +52,27 @@ inventoryRouter.post(
   isLoggedIn,
   async (req: Request, res: Response) => {
     const newitem = req.body
+    const item_code = parseInt(newitem.i1)
+    const itemData = await Item.findOne({ item_code: item_code })
+
+    const { name, user_type, username } = req.user as {
+      name: string
+      user_type: string
+      username: string
+    }
+
+    await Log.create({
+      name,
+      username,
+      text: `Updated item Quantity: ${newitem.i4}`,
+      item_code: parseInt(newitem.i1),
+      item_name: itemData?.item_name || 'N/A',
+      user_type,
+    })
+
     try {
       const x = await Item.findOneAndUpdate(
-        { item_code: parseInt(newitem.i1) },
+        { item_code },
         { unit_price: newitem.i3, quantity: newitem.i4 }
       )
       const allDetails: ItemDocument[] = await Item.find({})

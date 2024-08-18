@@ -4,6 +4,7 @@ import Item from '../models/item'
 import Sales from '../models/sales'
 import Bill from '../models/bill'
 import statsRouter from './stats.router'
+import Log from '../models/logs'
 
 const userRouter = express.Router()
 
@@ -85,4 +86,12 @@ userRouter.get('/print', isLoggedIn, (req: Request, res: Response) => {
   res.render('print_bill')
 })
 
+userRouter.get('/logs', isLoggedIn, async (req: Request, res: Response) => {
+  if (res.locals.currentUser.user_type !== 'Manager') {
+    req.flash('error', 'Only Sales Clerk is authorized for this action')
+    return res.redirect('/welcome')
+  }
+  const logsData = await Log.find({})
+  res.render('logs', { logsData })
+})
 export default userRouter
